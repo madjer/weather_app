@@ -19,12 +19,14 @@ request({
     json:true
 }, (error, respnose, body)=>{
     if (error) {
-
-    } else {
+        console.log('Unable to connect to Google servers.');    
+    } else if (body.status === 'ZERO_RESULTS') {
+        console.log('Unable to find that address.');
+    } else if(body.status === 'OK') {
         let result = body.results[0];                        
         let location = result.geometry.location;
         console.log(`Address: ${result.formatted_address}`);
         console.log(`Lat: ${location.lat}`);
         console.log(`Lng: ${location.lng}`);
-    } 
+    }
 });
